@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { Navigate } from "react-router-dom";
 import { useState } from "react";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [redirect, setRedirect] = useState(false);
   const [d, setD] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -17,15 +18,18 @@ const LoginPage = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      credentials: 'include'
+      credentials: "include",
     });
     const data = await response.json();
-    setD(data);
+    if (response.ok) {
+      setRedirect(true);
+      setD(data);
+    }
   };
 
-  useEffect(() => {
-    console.log(d);
-  }, [d]);
+  if (redirect) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className="max-w-md mx-auto">
