@@ -17,6 +17,7 @@ const LoginPage = () => {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: 'include'
     });
     const data = await response.json();
     setD(data);
@@ -25,7 +26,7 @@ const LoginPage = () => {
   useEffect(() => {
     console.log(d);
   }, [d]);
-  
+
   return (
     <div className="max-w-md mx-auto">
       <h1 className="text-center mb-10 font-bold text-4xl">Login</h1>
