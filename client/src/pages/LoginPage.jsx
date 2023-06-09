@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useState } from "react";
 
 const LoginPage = () => {
@@ -20,12 +21,15 @@ const LoginPage = () => {
     const data = await response.json();
     setD(data);
   };
-  console.log(d)
 
+  useEffect(() => {
+    console.log(d);
+  }, [d]);
+  
   return (
     <div className="max-w-md mx-auto">
       <h1 className="text-center mb-10 font-bold text-4xl">Login</h1>
-      <form onClick={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-8">
           <input
             type="text"

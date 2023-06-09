@@ -1,5 +1,6 @@
 import userModel from "../model/User.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
   try {
@@ -18,10 +19,29 @@ export const register = async (req, res) => {
   }
 };
 
-export const login = async (req,res)=>{
-    try {
-        const {email,password} = req.body;
-    } catch (error) {
-      res.status(500).json({ error });
+export const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await userModel.findOne({ email: email });
+
+    if (!user) {
+      return res.status(404).json({ error: "WRONG EMAIL" });
     }
-}
+
+    const checkPassword = await bcrypt.compare(password, user.password);
+
+    if (!checkPassword) {
+      return res.status(401).json({ error: "WRONG PASSWORD" });
+    }
+
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+
+    res.status(200).json({
+      token: token,
+      email: email,
+      userName: user.userName,
+    });
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+};
