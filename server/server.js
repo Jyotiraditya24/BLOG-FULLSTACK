@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 // ROUTES
-app.use(authRoute);
+app.use("/auth", authRoute);
 
 //MONGO DB CONNECTION
 mongoose.connect(process.env.MONGO_URL).then(() => {
