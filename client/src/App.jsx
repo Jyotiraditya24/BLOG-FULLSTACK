@@ -1,12 +1,12 @@
 import Navbar from "./components/Navbar";
 import "./App.css";
-import BlogEntry from "./components/BlogEntry";
+import Blogs from "./components/Blogs";
 
 function App() {
   return (
     <main>
      <Navbar/>
-     <BlogEntry></BlogEntry>
+     <Blogs></Blogs>
     </main>
   );
 }
