@@ -1,16 +1,17 @@
+import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
     <header className="flex flex-row justify-between items-center p-4 my-0 mx-auto max-w-xl md:max-w-6xl mb-10">
-      <a href="#" className="no-underline font-bold">
+      <Link to="/" className="no-underline font-bold">
         LOGO
-      </a>
+      </Link>
       <nav className="flex flex-row justify-between items-center gap-10">
-        <a href="" className="no-underline">
+        <Link to="/login" className="no-underline">
           Login
-        </a>
-        <a href="" className="no-underline  ">
+        </Link>
+        <Link to="/register" className="no-underline  ">
           Register
-        </a>
+        </Link>
       </nav>
     </header>
   );
