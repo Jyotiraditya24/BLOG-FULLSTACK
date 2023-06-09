@@ -22,8 +22,11 @@ const RegisterPage = () => {
     });
     const data = await response.json();
     setD(data);
-    console.log(d);
   };
+
+  useEffect(()=>{
+    console.log(d)
+  },[d])
 
   return (
     <div className="max-w-md mx-auto">
