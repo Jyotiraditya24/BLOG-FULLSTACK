@@ -24,9 +24,9 @@ const RegisterPage = () => {
     setD(data);
   };
 
-  useEffect(()=>{
-    console.log(d)
-  },[d])
+  useEffect(() => {
+    console.log(d);
+  }, [d]);
 
   return (
     <div className="max-w-md mx-auto">

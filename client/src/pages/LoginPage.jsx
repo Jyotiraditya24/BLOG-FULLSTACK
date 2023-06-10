@@ -1,12 +1,13 @@
 import { Navigate } from "react-router-dom";
 import { useState } from "react";
-import { useEffect } from "react";
+import { useContext } from "react";
+import { UserContext } from "../context/UserContext";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
-  const [d, setD] = useState(null);
+  const { setUserInfo } = useContext(UserContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,18 +23,11 @@ const LoginPage = () => {
       credentials: "include",
     });
     const data = await response.json();
-    if (response.ok) {
+    setUserInfo(data);
+    if (data) {
       setRedirect(true);
-      setD(data);
     }
   };
-
-  useEffect(() => {
-    console.log(d);
-    localStorage.setItem("userName", d?.userName);
-    localStorage.setItem("token", d?.token);
-    localStorage.setItem("email", d?.email);
-  }, [d]);
 
   if (redirect) {
     return <Navigate to="/" />;
