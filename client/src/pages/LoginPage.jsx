@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useState } from "react";
+import { useEffect } from "react";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -26,6 +27,13 @@ const LoginPage = () => {
       setD(data);
     }
   };
+
+  useEffect(() => {
+    console.log(d);
+    localStorage.setItem("userName", d?.userName);
+    localStorage.setItem("token", d?.token);
+    localStorage.setItem("email", d?.email);
+  }, [d]);
 
   if (redirect) {
     return <Navigate to="/" />;
