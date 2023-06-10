@@ -1,17 +1,20 @@
+import { useEffect } from "react";
 import { useState } from "react";
 
 const ImageUpload = () => {
   const [file, setFile] = useState();
   const [image, setImage] = useState();
-
-  const previewFiles = (file) => {
+   const previewFiles = (file) => {
     const reader = new FileReader(); //reads any type of file and converts it into a path url
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(file); // converting to image base64 url
     reader.onloadend = () => {
       setImage(reader.result);
-      console.log(image);
     };
   };
+
+  useEffect(() => {
+    console.log(image); //image base64 url
+  }, [image]);
 
   const handleSubmit = (e) => {};
   return (
@@ -25,9 +28,9 @@ const ImageUpload = () => {
           type="file"
           id="fileInput"
           onChange={(e) => {
-            const file1 = e.target.files[0]
-            setFile(file1)
-            previewFiles(file1)
+            const file1 = e.target.files[0];
+            setFile(file1);
+            previewFiles(file1);
           }}
           required
           accept="image/png, image/jpg, image/jpeg"
