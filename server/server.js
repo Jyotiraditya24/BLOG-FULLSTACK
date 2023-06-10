@@ -5,9 +5,11 @@ import dotenv from "dotenv";
 import authRoute from "./routes/auth.js";
 import postRoute from "./routes/post.js";
 import cookieParser from "cookie-parser";
+import cloudinary from "./cloudinary/index.js";
 
 dotenv.config();
 const app = express();
+
 app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
 app.use(express.json());
 app.use(cookieParser());
