@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import authRoute from "./routes/auth.js";
 import postRoute from "./routes/post.js";
 import cookieParser from "cookie-parser";
-import cloudinary from "./cloudinary/index.js";
+import { v2 as cloudinary } from "cloudinary";
 
 dotenv.config();
 const app = express();
@@ -24,3 +24,12 @@ mongoose.connect(process.env.MONGO_URL).then(() => {
     console.log("connected to port 3001");
   });
 });
+
+//CLOUDINARY
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_APIKEY,
+  api_secret: process.env.CLOUDINARY_APISECRET,
+});
+
+export default cloudinary;
