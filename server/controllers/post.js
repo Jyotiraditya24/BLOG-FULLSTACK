@@ -1,5 +1,8 @@
 export const createPost = async (req, res) => {
   try {
-    const {} = req.body;
-  } catch (error) {}
+    console.log(req.body);
+    res.json("i have recieved your data");
+  } catch (error) {
+    console.log(error);
+  }
 };

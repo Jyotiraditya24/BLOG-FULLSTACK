@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import axios from "axios";
 
 const ImageUpload = () => {
   const [file, setFile] = useState();
   const [image, setImage] = useState();
-   const previewFiles = (file) => {
+  const previewFiles = (file) => {
     const reader = new FileReader(); //reads any type of file and converts it into a path url
     reader.readAsDataURL(file); // converting to image base64 url
     reader.onloadend = () => {
@@ -16,7 +17,24 @@ const ImageUpload = () => {
     console.log(image); //image base64 url
   }, [image]);
 
-  const handleSubmit = (e) => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+     const response = await fetch("http://localhost:3001/post/create", {
+       method: "POST",
+       headers: {
+         "Content-Type": "application/json",
+       },
+       body: JSON.stringify({
+         image: image,
+       }),
+     });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
       <form
