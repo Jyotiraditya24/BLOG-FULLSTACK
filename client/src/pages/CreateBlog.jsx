@@ -1,7 +1,8 @@
-import e from "cors";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import Image from "../components/Image";
+import { UserContext } from "../context/UserContext";
 
 const modules = {
   toolbar: [
@@ -30,18 +31,37 @@ const CreateBlog = () => {
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [content, setContent] = useState("");
+  const [imageBase64Url, setImageBase64Url] = useState("");
+  const [uploadedImage, setUploadedImage] = useState("");
   const [files, setFiles] = useState("");
+  const { userInfo } = useContext(UserContext);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = new FormData();
-    data.set("title", title);
-    data.set("summary", summary);
-    data.set("file", files[0]);
-    fetch("http://localhost:3001/post/create", {
-      method: "POST",
-      body: data,
-    });
+    try {
+      const response = await fetch("http://localhost:3001/cloud/postImg", {
+        method: "POST",
+        body: JSON.stringify({
+          image: imageBase64Url,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const previewFile = (uploadfile) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(uploadfile);
+    reader.onloadend = () => {
+      setImageBase64Url(reader.result);
+    };
   };
 
   return (
@@ -60,7 +80,16 @@ const CreateBlog = () => {
         value={summary}
         onChange={(e) => setSummary(e.target.value)}
       />
-      <input type="file" onChange={(e) => setFiles(e.target.files)} />
+      <input
+        type="file"
+        onChange={(e) => {
+          const uploadfile = e.target.files[0];
+          setFiles(uploadfile);
+          previewFile(uploadfile);
+        }}
+        required
+        accept="image/png, image/jpg, image/jpeg"
+      />
       <ReactQuill
         value={content}
         modules={modules}
@@ -70,6 +99,7 @@ const CreateBlog = () => {
       <button className="border border-black px-4 py-2 rounded-sm bg-blue-500 text-center hover:cursor-pointer hover:bg-blue-600 hover:scale-95 transition">
         Create Post
       </button>
+      {/* <Image uploadedImage={uploadedImage} /> */}
     </form>
   );
 };

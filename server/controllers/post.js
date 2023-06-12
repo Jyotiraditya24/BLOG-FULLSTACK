@@ -1,24 +1,20 @@
+import postModel from "../model/Post.js";
 import cloudinary from "../server.js";
 
 export const createPost = async (req, res) => {
+  let imageData;
   try {
-    const { image } = req.body;
-    const uploadedImage = await cloudinary.uploader.upload(
-      image,
-      {
-        upload_preset: "unsigned_upload",
-        public_id: `BLOG_IMAGE`,
-        allowed_formats: ["png", "jpg", "jpeg", "svg", "ico", "jfif", "webp"],
-      },
-      function (err, result) {
-        if (err) {
-          console.log(err);
-        }
-        res.status(201).json(result);
-      }
-    );
+    const { title, summary, content, image, authorId, authorName } = req.body;
+    const newPost = new postModel({
+      title: title,
+      summary: summary,
+      content: content,
+      image: imageData,
+      author: authorId,
+    });
+    res.status(201).json(newPost);
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 };
 

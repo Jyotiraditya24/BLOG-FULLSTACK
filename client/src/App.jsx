@@ -19,7 +19,6 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/create" element={<CreateBlog />} />
           </Route>
-          <Route path="/experiment" element={<ImageUpload />}></Route>
         </Routes>
       </UserContextProvider>
     </BrowserRouter>

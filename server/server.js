@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import authRoute from "./routes/auth.js";
 import postRoute from "./routes/post.js";
+import cloudRoute from "./routes/cloud.js";
 import cookieParser from "cookie-parser";
 import { v2 as cloudinary } from "cloudinary";
 
@@ -17,6 +18,7 @@ app.use(cookieParser());
 // ROUTES
 app.use("/auth", authRoute);
 app.use("/post", postRoute);
+app.use("/cloud", cloudRoute);
 
 //MONGO DB CONNECTION
 mongoose.connect(process.env.MONGO_URL).then(() => {

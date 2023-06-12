@@ -9,6 +9,7 @@ const Navbar = () => {
     setUserInfo("");
     setRedirect(true);
   };
+  console.log(userInfo.userName);
 
   if (redirect) {
     return <Navigate to="/login" />;

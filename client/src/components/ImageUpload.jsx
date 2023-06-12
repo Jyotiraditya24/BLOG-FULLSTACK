@@ -1,11 +1,14 @@
 import { useEffect } from "react";
-import { useState } from "react";
+import { useState,useContext } from "react";
+import { UserContext } from "../context/UserContext";
 import Image from "./Image";
 
 const ImageUpload = () => {
   const [file, setFile] = useState("");
   const [image, setImage] = useState("");
   const [uploadedImage, setUploadedImage] = useState("");
+
+
   const previewFiles = (file) => {
     const reader = new FileReader(); //reads any type of file and converts it into a path url
     reader.readAsDataURL(file); // converting to image base64 url

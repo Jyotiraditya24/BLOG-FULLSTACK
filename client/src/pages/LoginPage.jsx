@@ -23,6 +23,7 @@ const LoginPage = () => {
       credentials: "include",
     });
     const data = await response.json();
+    console.log(data);
     setUserInfo(data);
     if (data) {
       setRedirect(true);
