@@ -17,6 +17,7 @@ const Image = ({ uploadedImage }) => {
   myImage.resize(
     thumbnail().width(150).height(150).gravity(focusOn(FocusOn.face()))
   );
+//   we can use .fill() instead of thumbnail
   return (
     <div>
       <AdvancedImage cldImg={myImage} />
