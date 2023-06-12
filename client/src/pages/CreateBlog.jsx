@@ -118,7 +118,7 @@ const CreateBlog = () => {
       <button className="border border-black px-4 py-2 rounded-sm bg-blue-500 text-center hover:cursor-pointer hover:bg-blue-600 hover:scale-95 transition">
         Create Post
       </button>
-      {/* <Image uploadedImage={uploadedImage} /> */}
+      <Image uploadedImage={uploadedImage} />
     </form>
   );
 };
