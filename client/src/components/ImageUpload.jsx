@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import Image from "./Image";
 
 const ImageUpload = () => {
-  const [file, setFile] = useState();
-  const [image, setImage] = useState();
+  const [file, setFile] = useState("");
+  const [image, setImage] = useState("");
+  const [uploadedImage, setUploadedImage] = useState("");
   const previewFiles = (file) => {
     const reader = new FileReader(); //reads any type of file and converts it into a path url
     reader.readAsDataURL(file); // converting to image base64 url
@@ -19,17 +21,19 @@ const ImageUpload = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-     const response = await fetch("http://localhost:3001/post/create", {
-       method: "POST",
-       headers: {
-         "Content-Type": "application/json",
-       },
-       body: JSON.stringify({
-         image: image,
-       }),
-     });
+      const response = await fetch("http://localhost:3001/post/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          image: image,
+        }),
+      });
       const data = await response.json();
-      console.log(data);
+      /* getting public_id data from  cloudinary*/
+      console.log(data.public_id);
+      setUploadedImage(data.public_id);
     } catch (error) {
       console.log(error);
     }
@@ -57,6 +61,7 @@ const ImageUpload = () => {
         </button>
       </form>
       <img src={image} alt="" />
+      <Image uploadedImage={uploadedImage} />
     </div>
   );
 };
