@@ -49,8 +49,27 @@ const CreateBlog = () => {
         },
       });
 
+      //we will get public_id from here
       const data = await response.json();
-      console.log(data);
+      console.log("this is data1", data);
+      setUploadedImage(data.public_id);
+
+      const response2 = await fetch("http://localhost:3001/post/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: title,
+          summary: summary,
+          content: content,
+          image: uploadedImage,
+          author: userInfo.userId,
+        }),
+      });
+
+      const data2 = await response2.json();
+      console.log("this is data2", data2);
     } catch (error) {
       console.log(error.message);
     }
