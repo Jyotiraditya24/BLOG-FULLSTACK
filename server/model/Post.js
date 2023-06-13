@@ -6,10 +6,11 @@ const postSchema = new mongoose.Schema(
     summary: String,
     content: String,
     image: String,
-    author: {
+    authorId: {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+    authorName: String,
   },
   {
     timestamps: true,

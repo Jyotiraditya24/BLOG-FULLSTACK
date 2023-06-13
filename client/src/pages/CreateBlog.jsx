@@ -1,6 +1,8 @@
+import { useEffect } from "react";
 import { useState, useContext } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { Navigate } from "react-router-dom";
 import Image from "../components/Image";
 import { UserContext } from "../context/UserContext";
 
@@ -35,6 +37,7 @@ const CreateBlog = () => {
   const [uploadedImage, setUploadedImage] = useState("");
   const [files, setFiles] = useState("");
   const { userInfo } = useContext(UserContext);
+  const [redirect, SetRedirect] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,22 +57,8 @@ const CreateBlog = () => {
       console.log("this is data1", data);
       setUploadedImage(data.public_id);
 
-      const response2 = await fetch("http://localhost:3001/post/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title: title,
-          summary: summary,
-          content: content,
-          image: uploadedImage,
-          author: userInfo.userId,
-        }),
-      });
-
-      const data2 = await response2.json();
-      console.log("this is data2", data2);
+      console.log(userInfo.userId);
+      console.log(userInfo.userName);
     } catch (error) {
       console.log(error.message);
     }
@@ -82,6 +71,39 @@ const CreateBlog = () => {
       setImageBase64Url(reader.result);
     };
   };
+
+  useEffect(() => {
+    if (uploadedImage) {
+      const fun = async () => {
+        const response2 = await fetch("http://localhost:3001/post/create", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title: title,
+            summary: summary,
+            content: content,
+            image: uploadedImage,
+            authorId: userInfo.userId,
+            authorName: userInfo.userName,
+          }),
+        });
+
+        const data2 = await response2.json();
+        console.log("this is data2", data2);
+
+        if (data2) {
+          SetRedirect(true);
+        }
+      };
+      fun();
+    }
+  }, [uploadedImage]);
+
+   if (redirect) {
+     return <Navigate to="/" />;
+   }
 
   return (
     <form className="flex flex-col gap-y-3" onSubmit={handleSubmit}>
