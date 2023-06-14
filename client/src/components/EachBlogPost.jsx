@@ -1,4 +1,6 @@
 import Image from "./Image";
+import { format } from "date-fns";
+
 const EachBlogPost = ({
   title,
   summary,
@@ -6,6 +8,7 @@ const EachBlogPost = ({
   image,
   authorId,
   authorName,
+  createdAt,
 }) => {
   return (
     <div className="flex flex-col md:flex-row gap-5 md:gap-0 justify-center items-center md:justify-start md:items-start">
@@ -16,7 +19,7 @@ const EachBlogPost = ({
           <a href="#" className="font-bold mr-2">
             {authorName}
           </a>
-          <time className="font-extralight">2023-01-06 16:45</time>
+          <time className="font-extralight">{format(new Date(createdAt),'MMM d, yyyy HH:mm')}</time>
         </div>
         <p className="font-light text-2xl mt-2 px-4 md:px-0">{summary}</p>
       </div>
