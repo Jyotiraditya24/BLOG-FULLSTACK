@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import postModel from "../model/Post.js";
 
 export const createPost = async (req, res) => {
@@ -24,5 +25,20 @@ export const getAllPost = async (req, res) => {
     res.status(200).json(allPost);
   } catch (error) {
     res.status(500).json({ error: error });
+  }
+};
+
+export const getSinglePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const posts = await postModel.find({ authorId: id });
+
+    if (posts.length === 0) {
+      return res.status(404).json({ error: "No posts found for the author" });
+    }
+
+    res.json({ posts });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
