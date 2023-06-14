@@ -24,7 +24,7 @@ const LoginPage = () => {
     });
     const data = await response.json();
     console.log(data);
-    setUserInfo(data);
+    setUserInfo(data.token);
     if (data) {
       setRedirect(true);
     }

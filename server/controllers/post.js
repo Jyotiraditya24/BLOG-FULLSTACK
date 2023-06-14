@@ -31,13 +31,13 @@ export const getAllPost = async (req, res) => {
 export const getSinglePost = async (req, res) => {
   try {
     const { id } = req.params;
-    const posts = await postModel.find({ authorId: id });
+    const posts = await postModel.find(new mongoose.Types.ObjectId(id));
 
     if (posts.length === 0) {
       return res.status(404).json({ error: "No posts found for the author" });
     }
 
-    res.json({ posts });
+    res.status(200).json(posts);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

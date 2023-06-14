@@ -29,6 +29,7 @@ const Blogs = () => {
           authorId={post.authorId}
           authorName={post.authorName}
           createdAt={post.createdAt}
+          postId={post._id}
         />
       ))}
     </section>
