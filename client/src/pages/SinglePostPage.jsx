@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import Image from "../components/Image";
 
 const SinglePostPage = () => {
   const [userData, setUserData] = useState();
@@ -15,17 +16,32 @@ const SinglePostPage = () => {
       }
     );
     const data = await response.json();
-    setUserData(data); 
+    setUserData(data);
   }
 
   useEffect(() => {
     getData();
+  }, []);
+
+  useEffect(() => {
     console.log(userData);
-  },[]);
+  }, [userData]);
 
-  console.log("hello")
-
-  return <div>hello</div>;
+  return (
+    <div>
+      {userData &&
+        userData.map((data) => (
+          <div key={data._id}>
+            <h1>{data.title}</h1>
+            <h2>{data.summary}</h2>
+            <h2>{data.authorName}</h2>
+            <h2>{data.content}</h2>
+            <h2>{data.createdAt}</h2>
+            <Image uploadedImage={data.image}/>
+          </div>
+        ))}
+    </div>
+  );
 };
 
 export default SinglePostPage;
