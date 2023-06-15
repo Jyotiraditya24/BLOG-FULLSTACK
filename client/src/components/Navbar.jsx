@@ -15,7 +15,7 @@ const Navbar = () => {
     return <Navigate to="/login" />;
   }
   return (
-    <header className="flex flex-row justify-between items-center p-4 my-0 mx-auto max-w-xl md:max-w-6xl mb-10">
+    <header className="flex flex-row justify-between items-center p-4 my-0 mx-auto max-w-xl md:max-w-6xl mb-10 bg-blue-500">
       <Link to="/" className="no-underline font-bold">
         LOGO
       </Link>
